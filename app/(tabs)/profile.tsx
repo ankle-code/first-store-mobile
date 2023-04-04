@@ -3,14 +3,15 @@ import { StyleSheet, View, Text, Image, ImageBackground } from 'react-native';
 export default function Profile() {
   return (
     <View style={styles.container}>
-      <Text>Profile</Text>
+      <View>
+        <Text style={styles.text}>Júlio Cesar</Text>
+      </View>
       <View style={styles.avatarContainer}>
         <Image
           style={styles.avatarImage}
           source={require('../../assets/images/avatar.jpg')}
           resizeMode="cover"
         />
-        <Text style={styles.text}>Júlio Cesar</Text>
       </View>
       {/* <View>
         <Text style={styles.text}>Meus Produtos:</Text>
@@ -26,8 +27,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   avatarContainer: {
-    width: 10,
-    height: 10,
+    width: 200,
+    height: 200,
     alignItems: 'center',
     justifyContent: 'center',
   },

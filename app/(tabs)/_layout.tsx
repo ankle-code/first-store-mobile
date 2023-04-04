@@ -1,4 +1,4 @@
-import { View, ImageBackground } from 'react-native';
+import { View, SafeAreaView, ImageBackground } from 'react-native';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Link, Tabs } from 'expo-router';
 import { Pressable, useColorScheme } from 'react-native';
@@ -19,24 +19,18 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: 'red',
-        tabBarInactiveTintColor: 'white',
-        headerStyle: {
-          backgroundColor: '#0F2B31',
-          height: 60,
-        },
+        tabBarActiveTintColor: '#c9240a',
         headerTintColor: 'white',
         headerBackground: () => (
-          <View>
+          <SafeAreaView>
             <ImageBackground
               source={require('../../assets/images/background.jpg')}
-              resizeMode="cover"
               style={{ height: 60 }}
             ></ImageBackground>
-          </View>
+          </SafeAreaView>
         ),
         tabBarStyle: {
-          backgroundColor: '#0F2B31',
+          backgroundColor: '#0F2b31',
           height: 70,
           opacity: 0.9,
           paddingBottom: 5,
@@ -45,7 +39,6 @@ export default function TabLayout() {
           <View>
             <ImageBackground
               source={require('../../assets/images/background.jpg')}
-              resizeMode="cover"
               style={{ height: 70, width: '100%' }}
             ></ImageBackground>
           </View>

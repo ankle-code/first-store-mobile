@@ -2,7 +2,16 @@ import { StyleSheet, TouchableOpacity, Image, View, Text } from 'react-native';
 
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
-const Card = ({ type }: { type: 'cart' | 'store' }) => {
+type CardProps = {
+  type: 'cart' | 'store';
+  nome_produto: string;
+  nome_usuario: string;
+  preco: string;
+  quantidade: number;
+  rating?: number;
+};
+
+const Card = ({ type, nome_produto, preco, rating }: CardProps) => {
   const storeCard = (
     <View>
       <TouchableOpacity style={styles.cardContainer}>
@@ -12,20 +21,20 @@ const Card = ({ type }: { type: 'cart' | 'store' }) => {
           style={styles.cardImage}
         />
         <View style={styles.cardSection}>
-          <Text style={styles.cardTitle}>Cyberpunk</Text>
+          <Text style={styles.cardTitle}>{nome_produto}</Text>
           <FontAwesome name="ellipsis-v" />
         </View>
 
         <View style={styles.cardSection}>
           <Text style={styles.cardTitle}>Price</Text>
-          <Text style={styles.cardPriceText}>R$ 199,99</Text>
+          <Text style={styles.cardPriceText}>{preco}</Text>
         </View>
 
         <View style={styles.cardRating}>
           <View style={styles.raitingIconContainer}>
             <FontAwesome style={styles.raitingIcon} name="star" />
           </View>
-          <Text>5</Text>
+          <Text>{rating}</Text>
         </View>
       </TouchableOpacity>
       <TouchableOpacity style={styles.buyButton}>
@@ -48,13 +57,13 @@ const Card = ({ type }: { type: 'cart' | 'store' }) => {
         />
 
         <View style={styles.cardSection}>
-          <Text style={styles.cardTitle}>Cyberpunk</Text>
+          <Text style={styles.cardTitle}>{nome_produto}</Text>
           <FontAwesome name="ellipsis-v" />
         </View>
 
         <View style={styles.cardSection}>
           <Text style={styles.cardTitle}>Price</Text>
-          <Text style={styles.cardPriceText}>R$ 199,99</Text>
+          <Text style={styles.cardPriceText}>{preco}</Text>
         </View>
       </TouchableOpacity>
       <View style={styles.cartButtons}>
@@ -81,8 +90,8 @@ export default Card;
 const styles = StyleSheet.create({
   cardContainer: {
     backgroundColor: '#f8f9fc',
-    maxWidth: 200,
-    flexDirection: 'column',
+    maxWidth: '80%',
+    width: 400,
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 20,
@@ -90,9 +99,10 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 15,
     gap: 15,
     position: 'relative',
+    marginLeft: 50,
   },
   cardImage: {
-    width: 200,
+    width: '80%',
     height: 200,
     borderRadius: 15,
   },
@@ -117,7 +127,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     position: 'absolute',
     top: 25,
-    left: 130,
+    left: 250,
     flexDirection: 'row',
     backgroundColor: 'white',
     alignItems: 'center',
@@ -135,7 +145,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#c9240a',
     justifyContent: 'center',
     gap: 10,
-    width: 200,
+    width: '80%',
+    marginLeft: 50,
     borderBottomRightRadius: 15,
     borderBottomLeftRadius: 15,
     alignItems: 'center',
@@ -166,6 +177,8 @@ const styles = StyleSheet.create({
   },
   cartButtons: {
     flexDirection: 'row',
+    width: '80%',
+    marginLeft: 50,
   },
   trashIcon: {
     color: 'white',
