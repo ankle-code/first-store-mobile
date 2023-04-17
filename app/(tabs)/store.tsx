@@ -4,13 +4,21 @@ import Card from '../../components/Card';
 import { getProducts } from '../../api';
 import { useState } from 'react';
 import Loading from '../../components/Loading';
+import ProductDetails from '../../components/ProductDetails';
 
 const Store = () => {
   const [data, setData] = useState<any>();
+  const [selectedProductId, setSelectedProductsId] = useState<number | null>(
+    null
+  );
 
   const getProductsToStore = async () => {
     const response = await getProducts();
     setData(response);
+  };
+
+  const clearSelectedProduct = () => {
+    setSelectedProductsId(null);
   };
 
   if (!data) {
@@ -18,12 +26,20 @@ const Store = () => {
     return <Loading />;
   }
 
+  if (selectedProductId) {
+    return (
+      <ProductDetails id={selectedProductId} onExit={clearSelectedProduct} />
+    );
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Escolha seu jogo favorito:</Text>
       <FlatList
         data={data}
-        renderItem={({ item }) => <Card type="store" {...item} />}
+        renderItem={({ item }) => (
+          <Card onPress={setSelectedProductsId} type="store" {...item} />
+        )}
         keyExtractor={(product) => product.id.toString()}
         style={styles.listContainer}
         contentContainerStyle={{ alignItems: 'center', gap: 50 }}

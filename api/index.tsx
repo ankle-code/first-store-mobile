@@ -25,3 +25,32 @@ export const getProducts = async (): Promise<getProductsResponse> => {
 
   return request.data;
 };
+
+export const getProductById = async (id: number) => {
+  const request = await axios.get(`http://localhost:13700/produtos/${id}`);
+
+  return request.data;
+};
+
+export const createProduct = (product: any) => {
+  axios.post('http://localhost:13700/produtos/', product);
+};
+
+export const getUsersCart = async () => {
+  const request = await axios.get('http://localhost:13700/carrinhos');
+
+  return request.data;
+};
+
+export const deleteCartProduct = async (id: number) => {
+  const request = await axios.delete(`http://localhost:13700/carrinhos/${id}`);
+
+  return request.data;
+};
+
+export const addToCart = async (id_produto: number, id_usuario: number) => {
+  const request = await axios.post('http://localhost:13700/carrinhos', {
+    id_produto,
+    id_usuario,
+  });
+};

@@ -1,49 +1,69 @@
-import { Text, View, StyleSheet, FlatList } from 'react-native';
+import { Text, View, StyleSheet, FlatList, ScrollView } from 'react-native';
 
 import Card from '../../components/Card';
 
-const MOCKED_DATA = [
-  {
-    id: 1,
-    name: 'cyberpunk',
-    price: 199,
-    raiting: 5,
-  },
-  {
-    id: 2,
-    name: 'cyberpunk',
-    price: 199,
-    raiting: 5,
-  },
-  {
-    id: 3,
-    name: 'cyberpunk',
-    price: 199,
-    raiting: 5,
-  },
-  {
-    id: 4,
-    name: 'cyberpunk',
-    price: 199,
-    raiting: 5,
-  },
-];
+import { getUsersCart, getProductById, deleteCartProduct } from '../../api';
+import { useState } from 'react';
+
+import Loading from '../../components/Loading';
 
 const Cart = () => {
+  const [userCart, setUserCart] = useState<any>();
+  const [data, setData] = useState<any>([]);
+
+  const getUserCart = async () => {
+    const response = await getUsersCart();
+
+    const userCart = [...response[0].id_produtos.trim().split(',')];
+
+    const userCartFormat = userCart.map((id) => Number(id));
+
+    setUserCart(userCartFormat);
+  };
+
+  const getProduct = async (id: number) => {
+    const response = await getProductById(id);
+
+    const isProductValid = response.id ? true : false;
+    console.log(response, isProductValid, 'getProduct');
+    if (isProductValid) {
+      setData((data: any) => [...data, response]);
+    }
+  };
+
+  const getProductsToCart = () => {
+    userCart.forEach((productId: number) => getProduct(productId));
+  };
+
+  if (!data.length) {
+    if (!userCart) {
+      getUserCart();
+      return <Loading />;
+    }
+
+    getProductsToCart();
+
+    return <Loading />;
+  }
+
+  console.log(data, 'data');
+
+  console.log(userCart, 'userCart');
+
   return (
-    <View>
+    <ScrollView>
       <Text style={styles.title}>Suas compras:</Text>
       <FlatList
-        data={MOCKED_DATA}
-        renderItem={({ item }) => <Card type="cart" {...item} />}
-        keyExtractor={(product) => product.id.toString()}
-        style={styles.listContainer}
-        contentContainerStyle={{
-          gap: 30,
-          alignItems: 'center',
+        data={data}
+        renderItem={({ item }) => {
+          console.log(item, 'item');
+          return <Card type="cart" {...item} />;
         }}
+        keyExtractor={(product) => product.id}
+        style={styles.listContainer}
+        contentContainerStyle={{ alignItems: 'center', gap: 50 }}
       />
-    </View>
+    </ScrollView>
   );
 };
 

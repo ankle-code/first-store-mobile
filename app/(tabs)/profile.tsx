@@ -1,8 +1,47 @@
-import { StyleSheet, View, Text, Image, ImageBackground } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  ImageBackground,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
+
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { useState } from 'react';
+import FormCreateProduct from '../../components/FormCreateProduct';
 
 export default function Profile() {
+  const [isCreating, setIsCreating] = useState(false);
+
+  const handleCreateProduct = () => {
+    setIsCreating((isCreating) => !isCreating);
+  };
+
+  const createProductButton = (
+    <View style={styles.createProductContainer}>
+      <TouchableOpacity
+        style={styles.createProductButton}
+        onPress={handleCreateProduct}
+      >
+        <Text style={styles.createProductText}>Criar Produto</Text>
+        <FontAwesome style={styles.createProductIcon} name="plus-circle" />
+      </TouchableOpacity>
+    </View>
+  );
+
+  const handleRanderCreateProduct = isCreating ? (
+    <FormCreateProduct />
+  ) : (
+    createProductButton
+  );
+
   return (
-    <View style={styles.container}>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={{ alignItems: 'center' }}
+    >
       <View>
         <Text style={styles.text}>Júlio Cesar</Text>
       </View>
@@ -13,18 +52,14 @@ export default function Profile() {
           resizeMode="cover"
         />
       </View>
-      {/* <View>
-        <Text style={styles.text}>Meus Produtos:</Text>
-      </View> */}
-    </View>
+      {handleRanderCreateProduct}
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   avatarContainer: {
     width: 200,
@@ -44,5 +79,25 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
     paddingVertical: 25,
+  },
+  createProductContainer: {
+    margin: 30,
+  },
+  createProductButton: {
+    backgroundColor: '#c9240a',
+    flexDirection: 'row',
+    gap: 10,
+    padding: 20,
+    borderRadius: 4,
+    alignItems: 'center',
+  },
+  createProductText: {
+    color: 'white',
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
+  createProductIcon: {
+    color: 'white',
+    fontSize: 18,
   },
 });

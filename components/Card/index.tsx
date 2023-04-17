@@ -2,6 +2,8 @@ import { StyleSheet, TouchableOpacity, Image, View, Text } from 'react-native';
 
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
+import { deleteCartProduct } from '../../api';
+
 type CardProps = {
   type: 'cart' | 'store';
   nome_produto: string;
@@ -9,12 +11,28 @@ type CardProps = {
   preco: string;
   quantidade: number;
   rating?: number;
+  id: number;
+  onPress: (id: number) => void;
 };
 
-const Card = ({ type, nome_produto, preco, rating }: CardProps) => {
+const Card = ({
+  id,
+  type,
+  nome_produto,
+  preco,
+  rating,
+  onPress,
+}: CardProps) => {
+  const deleteProductFromCart = () => {
+    deleteCartProduct(id);
+  };
+
   const storeCard = (
     <View>
-      <TouchableOpacity style={styles.cardContainer}>
+      <TouchableOpacity
+        style={styles.cardContainer}
+        onPress={() => onPress(id)}
+      >
         <Image
           source={require('../../assets/images/cyberpunk.jpeg')}
           resizeMode="cover"
@@ -47,7 +65,10 @@ const Card = ({ type, nome_produto, preco, rating }: CardProps) => {
   const cartCard = (
     <View>
       <TouchableOpacity style={styles.cardContainer}>
-        <TouchableOpacity style={styles.trashButton}>
+        <TouchableOpacity
+          style={styles.trashButton}
+          onPress={deleteProductFromCart}
+        >
           <FontAwesome style={styles.trashIcon} name="trash" />
         </TouchableOpacity>
         <Image
