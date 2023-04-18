@@ -2,24 +2,17 @@ import { Text, View, StyleSheet, FlatList, ScrollView } from 'react-native';
 
 import Card from '../../components/Card';
 
-import { getUsersCart, getProductById, deleteCartProduct } from '../../api';
+import { getProductById } from '../../api';
 import { useState } from 'react';
+
+import useCart from '../../hooks/useCart';
 
 import Loading from '../../components/Loading';
 
 const Cart = () => {
-  const [userCart, setUserCart] = useState<any>();
   const [data, setData] = useState<any>([]);
 
-  const getUserCart = async () => {
-    const response = await getUsersCart();
-
-    const userCart = [...response[0].id_produtos.trim().split(',')];
-
-    const userCartFormat = userCart.map((id) => Number(id));
-
-    setUserCart(userCartFormat);
-  };
+  const userCart = useCart();
 
   const getProduct = async (id: number) => {
     const response = await getProductById(id);
@@ -37,18 +30,12 @@ const Cart = () => {
 
   if (!data.length) {
     if (!userCart) {
-      getUserCart();
       return <Loading />;
     }
-
     getProductsToCart();
 
     return <Loading />;
   }
-
-  console.log(data, 'data');
-
-  console.log(userCart, 'userCart');
 
   return (
     <ScrollView>

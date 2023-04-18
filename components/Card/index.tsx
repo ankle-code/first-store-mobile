@@ -13,6 +13,7 @@ type CardProps = {
   rating?: number;
   id: number;
   onPress: (id: number) => void;
+  onBuy: (id: number) => void;
 };
 
 const Card = ({
@@ -22,6 +23,7 @@ const Card = ({
   preco,
   rating,
   onPress,
+  onBuy,
 }: CardProps) => {
   const deleteProductFromCart = () => {
     deleteCartProduct(id);
@@ -55,7 +57,7 @@ const Card = ({
           <Text>{rating}</Text>
         </View>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.buyButton}>
+      <TouchableOpacity style={styles.buyButton} onPress={() => onBuy(id)}>
         <FontAwesome style={styles.cardIcon} name="shopping-bag" />
         <Text style={styles.buyText}>Comprar</Text>
       </TouchableOpacity>

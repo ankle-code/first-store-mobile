@@ -24,6 +24,7 @@ type ProductDetailsResponse = {
 };
 
 const ProductDetails = ({ id, onExit }: ProductDetailsProps) => {
+  console.log(id);
   const [data, setData] = useState<ProductDetailsResponse | null>(null);
 
   const getProductDetails = async () => {
@@ -64,10 +65,7 @@ const ProductDetails = ({ id, onExit }: ProductDetailsProps) => {
         <TouchableOpacity style={styles.button} onPress={onExit}>
           <Text>Ver todos os Produtos</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.button, styles.buyButton]}
-          onPress={() => addToCart(id, 1)}
-        >
+        <TouchableOpacity style={[styles.button, styles.buyButton]}>
           <Text style={styles.textBuyButton}>Comprar</Text>
         </TouchableOpacity>
       </View>

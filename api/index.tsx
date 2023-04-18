@@ -48,9 +48,14 @@ export const deleteCartProduct = async (id: number) => {
   return request.data;
 };
 
-export const addToCart = async (id_produto: number, id_usuario: number) => {
-  const request = await axios.post('http://localhost:13700/carrinhos', {
-    id_produto,
-    id_usuario,
-  });
+export const addToCart = async (id_produtos: string, id_usuario: number) => {
+  const request = await axios.put(
+    `http://localhost:13700/carrinhos/${id_usuario}`,
+    {
+      id_produtos,
+      finalizados: [],
+    }
+  );
+
+  return request.data;
 };

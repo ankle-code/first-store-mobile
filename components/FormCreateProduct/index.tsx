@@ -9,7 +9,7 @@ import {
 
 import { createProduct } from '../../api';
 
-const FormCreateProduct = () => {
+const FormCreateProduct = ({ onCreate }: { onCreate: () => void }) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
@@ -31,6 +31,7 @@ const FormCreateProduct = () => {
     console.log(productData);
 
     createProduct(productData);
+    onCreate();
   };
 
   return (

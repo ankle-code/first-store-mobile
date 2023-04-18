@@ -32,7 +32,7 @@ export default function Profile() {
   );
 
   const handleRanderCreateProduct = isCreating ? (
-    <FormCreateProduct />
+    <FormCreateProduct onCreate={handleCreateProduct} />
   ) : (
     createProductButton
   );
